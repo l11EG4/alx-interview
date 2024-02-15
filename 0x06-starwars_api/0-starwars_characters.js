@@ -1,51 +1,22 @@
 #!/usr/bin/node
-/**
-* Prints all characters of a Star Wars movie
-* The first positional argument passed is the Movie ID
-* Display one character name per line in the same order
-* as  list in the /films/ endpoint
-* Made by MEGA
-*/
-
+/*made by MEGA*/
 
 const util = require('util');
 const request = util.promisify(require('request'));
+const filmID = process.argv[2];
 
-const argv = process.argv;
-const urlFilm = 'https://swapi-api.hbtn.io/api/films/';
-const urlMovie = `${urlFilm}${argv[2]}/`;
+async function starwarsCharacters (filmId) {
+  const endpoint = 'https://swapi-api.hbtn.io/api/films/' + filmId;
+  let response = await (await request(endpoint)).body;
+  response = JSON.parse(response);
+  const characters = response.characters;
 
-async function fetchData(url) {
-  try {
-    const response = await request(url);
-    return JSON.parse(response.body);
-  } catch (error) {
-    throw error;
+  for (let i = 0; i < characters.length; i++) {
+    const urlCharacter = characters[i];
+    let character = await (await request(urlCharacter)).body;
+    character = JSON.parse(character);
+    console.log(character.name);
   }
 }
 
-async function CharRequest(idx, characters, limit) {
-  try {
-    if (idx < limit) {
-      const character = await fetchData(characters[idx]);
-      console.log(character.name);
-      await CharRequest(idx + 1, characters, limit);
-    }
-  } catch (error) {
-    console.error('error:', error);
-  }
-}
-
-(async () => {
-  try {
-    const movieData = await fetchData(urlMovie);
-    const characters = movieData.characters;
-
-    if (characters && characters.length > 0) {
-      const limit = characters.length;
-      await CharRequest(0, characters, limit);
-    }
-  } catch (error) {
-    console.log(error);
-  }
-})();
+starwarsCharacters(filmID);
