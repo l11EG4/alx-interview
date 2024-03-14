@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+# made by mEGA
 
 isWinner = __import__('0-prime_game').isWinner
 
