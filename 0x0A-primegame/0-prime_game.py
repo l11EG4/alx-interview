@@ -1,25 +1,8 @@
 #!/usr/bin/python3
-# Made by mEGA
-"""this script  for Prime Game"""
-
+# made by mega
 
 def isWinner(x, nums):
-    """
-    this method  winner of a set of prime number removal games.
 
-    Args:
-        x (int): The num of rounds.
-        nums (list of int): A list of integers where each integer n denotes
-        a set of consecutive int starting from 1 up to and including n.
-
-    Returns:
-        str: for The name of the player who won the most rounds (either "Ben"
-        or "Maria").
-        None: If this winner it cannot be determined.
-
-    Raises:
-        None.
-    """
     # this Check for invalid input
     if x <= 0 or nums is None:
         return None
@@ -53,20 +36,7 @@ def isWinner(x, nums):
 
 
 def rm_multiples(ls, x):
-    """
-    this function Removes multiples of a prime number from an array of possible prime
-    numbers.
 
-    Args:
-        ls (list of int): for An array of possible prime numbers.
-        x (int): for The prime number to remove multiples of.
-
-    Returns:
-        None.
-
-    Raises:
-        None.
-    """
     # this loop for Iterates Over Multiple of prime num and marks them as
     for i in range(2, len(ls)):
         try:
